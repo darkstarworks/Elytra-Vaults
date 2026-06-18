@@ -19,19 +19,33 @@ Be sure to install this Datapack to the right location or it will not work prope
 The *correct* file path is **saves/[world]/datapacks** 
 
 ## ⚙️ Configuration
-The cost to open a vault (the **key item**) is configurable. Open
-`data/elytra_vault/function/config.mcfunction` and edit the two values:
+The key item required to open a vault is configurable. Open
+`data/elytra_vault/function/config.mcfunction` and edit the values:
 
 ```
-data modify storage elytra_vault:config key_item set value "minecraft:shulker_shell"
+data modify storage elytra_vault:config key_item set value {id:"minecraft:shulker_shell"}
 data modify storage elytra_vault:config key_name set value "Shulker Shell"
 ```
 
-Set `key_item` to any item id (e.g. `minecraft:diamond`, `minecraft:netherite_ingot`)
-and `key_name` to the label shown above the vault. Run `/reload` afterwards. Newly
-generated vaults use the new cost; vaults that already exist keep the cost they were
-created with. Note: a vault consumes exactly **one** key item — the *item* is
-configurable, not the quantity.
+`key_item` is written as an item stack, so you can use:
+
+- **Any item** — `{id:"minecraft:diamond"}`, `{id:"minecraft:netherite_ingot"}`, etc.
+- **A unique custom key** — give it components so only *that* item works, e.g. a
+  trial key tagged with custom data:
+  ```
+  {id:"minecraft:trial_key",components:{"minecraft:custom_data":{elytra_vault_key:1b}}}
+  ```
+  Players must hold an item built the same way to open the vault. **How players
+  obtain the key is up to you** (a `/give`, a recipe, loot, a shop, …) — the
+  datapack only sets what the vault requires, it doesn't hand out keys.
+
+`key_name` is the label shown above the vault ("Open With [ … ]"); set it to match.
+Run `/reload` after editing. Newly generated vaults use the new cost; existing
+vaults keep theirs.
+
+**Note:** only the item type and its components are checked — the *count is
+ignored*, so a vault always costs exactly **one** matching item (you can't require
+e.g. 4 of something through this).
 
 ## ℹ️ Extra Information
 I now have a Ko-fi link located on the pack’s Modrinth page on the sidebar, but always remember donations are appreciated, but **never** required.
