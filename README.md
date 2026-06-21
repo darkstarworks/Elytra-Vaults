@@ -8,7 +8,7 @@ This Datapack aims to remove the tedious grind to go out and find an End City an
 ## 📝 Features
 Upon generating either a new world/new chunks in your Minecraft world End City Ships will now spawn with a Vault Block instead of the usual Item Frame + Elytra.
 
-When approaching the Elytra Vault you will notice a Text Display entity above the Vault informing unfamiliar players that the Vault requires 1 Shulker Shell in order to open the Vault. This had to be done in order to make the Vault function.
+When approaching the Elytra Vault you will notice a Text Display entity above the Vault informing unfamiliar players which item is needed to open the Vault (a Shulker Shell by default). This had to be done in order to make the Vault function.
 
 ⚠️ **Please keep in mind that the required Vault Key may be changed in a future update, so be sure to keep an eye on the changelog when updating.** ⚠️
 
@@ -17,6 +17,35 @@ When approaching the Elytra Vault you will notice a Text Display entity above th
 Be sure to install this Datapack to the right location or it will not work properly. 
 
 The *correct* file path is **saves/[world]/datapacks** 
+
+## ⚙️ Configuration
+The key item required to open a vault is configurable. Open
+`data/elytra_vault/function/config.mcfunction` and edit the values:
+
+```
+data modify storage elytra_vault:config key_item set value {id:"minecraft:shulker_shell"}
+data modify storage elytra_vault:config key_name set value "Shulker Shell"
+```
+
+`key_item` is written as an item stack, so you can use:
+
+- **Any item** — `{id:"minecraft:diamond"}`, `{id:"minecraft:netherite_ingot"}`, etc.
+- **A unique custom key** — give it components so only *that* item works, e.g. a
+  trial key tagged with custom data:
+  ```
+  {id:"minecraft:trial_key",components:{"minecraft:custom_data":{elytra_vault_key:1b}}}
+  ```
+  Players must hold an item built the same way to open the vault. **How players
+  obtain the key is up to you** (a `/give`, a recipe, loot, a shop, …) — the
+  datapack only sets what the vault requires, it doesn't hand out keys.
+
+`key_name` is the label shown above the vault ("Open With [ … ]"); set it to match.
+Run `/reload` after editing. Newly generated vaults use the new cost; existing
+vaults keep theirs.
+
+**Note:** only the item type and its components are checked — the *count is
+ignored*, so a vault always costs exactly **one** matching item (you can't require
+e.g. 4 of something through this).
 
 ## ℹ️ Extra Information
 I now have a Ko-fi link located on the pack’s Modrinth page on the sidebar, but always remember donations are appreciated, but **never** required.

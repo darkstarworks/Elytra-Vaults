@@ -1,4 +1,5 @@
-setblock ^ ^-1 ^ vault{config:{loot_table:"elytra_vault:elytra_vault",key_item:{id:"minecraft:shulker_shell"}},shared_data:{display_item:{id:"minecraft:elytra",count:1},loot_table:"elytra_vault:elytra_vault"}} replace
-summon text_display ^ ^-.25 ^.75 {billboard:"center",line_width:80,text_opacity:255,Tags:["key_text"],text:["Open With ",{"color":"aqua","text":"[Shulker Shell]"}]}
-#setblock ^ ^-2 ^2 vault{config:{loot_table:"elytra_vault:elytra_vault",key_item:{id:"minecraft:shulker_shell"}},shared_data:{display_item:{id:"minecraft:elytra",count:1},loot_table:"elytra_vault:elytra_vault"}} replace
+# Load the configured cost, place the vault + label below the frame using it,
+# then remove the original item frame. Change the cost in config.mcfunction.
+function elytra_vault:config
+function elytra_vault:place_vault with storage elytra_vault:config
 kill @s
